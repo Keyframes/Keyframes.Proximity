@@ -258,39 +258,13 @@ var _default = function _default(Keyframes) {
       }; // Viewport edge
 
       var viewport = {
-        x: 0,
-        y: 0,
         width: window.innerWidth,
-        height: window.innerHeight,
-
-        get left() {
-          return this.x;
-        },
-
-        get right() {
-          return this.x + this.width;
-        },
-
-        get top() {
-          return this.y;
-        },
-
-        get bottom() {
-          return this.y + this.height;
-        }
-
+        height: window.innerHeight
       };
-
-      var notZero = function notZero(v) {
-        return +v || Number.MIN_VALUE;
-      };
-
-      var vx = mouse.x - targetCenter.x;
-      var vy = mouse.y - targetCenter.y;
-      var t = Math.min(((vx < 0 ? viewport.left : viewport.right) - targetCenter.x) / notZero(vx), ((vy < 0 ? viewport.top : viewport.bottom) - targetCenter.y) / notZero(vy));
+      var viewPortMagnitude = viewport.width / 2 * sinAngle <= viewport.height / 2 * cosAngle ? viewport.width / 2 / cosAngle : viewport.height / 2 / sinAngle;
       var viewPortEdge = {
-        x: targetCenter.x + vx * t,
-        y: targetCenter.y + vy * t
+        x: targetCenter.x + Math.cos(angle) * viewPortMagnitude,
+        y: targetCenter.y + Math.sin(angle) * viewPortMagnitude
       }; // Distances
 
       var calculateDistance = function calculateDistance(vector) {

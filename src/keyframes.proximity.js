@@ -30,30 +30,17 @@ export default (Keyframes) => {
 
             // Viewport edge
             const viewport = {
-                x: 0,
-                y: 0,
                 width: window.innerWidth,
                 height: window.innerHeight,
-
-                get left() { return this.x; },
-                get right() { return this.x + this.width; },
-                get top() { return this.y; },
-                get bottom() { return this.y + this.height; },
             };
 
-            const notZero = v => +v || Number.MIN_VALUE;
-
-            const vx = mouse.x - targetCenter.x;
-            const vy = mouse.y - targetCenter.y;
-
-            const t = Math.min(
-                ((vx < 0 ? viewport.left : viewport.right) - targetCenter.x) / notZero(vx),
-                ((vy < 0 ? viewport.top : viewport.bottom) - targetCenter.y) / notZero(vy),
-            );
+            const viewPortMagnitude = viewport.width / 2 * sinAngle <= viewport.height / 2 * cosAngle ?
+                viewport.width / 2 / cosAngle :
+                viewport.height / 2 / sinAngle;
 
             const viewPortEdge = {
-                x: targetCenter.x + vx * t,
-                y: targetCenter.y + vy * t,
+                x: targetCenter.x + Math.cos(angle) * viewPortMagnitude,
+                y: targetCenter.y + Math.sin(angle) * viewPortMagnitude,
             };
 
             // Distances
